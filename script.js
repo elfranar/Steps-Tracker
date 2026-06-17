@@ -38,6 +38,10 @@ let demoTimer = null
 let lastStepTime = 0
 let lastMotionValue = 0
 let filteredMagnitude = 0
+let baselineMagnitude = 0
+let peakDirection = 0
+let stepWindow = []
+let lastMagnitude = 0
 let history = JSON.parse(localStorage.getItem(STORAGE_KEYS.history) || '[]')
 
 function saveData() {
@@ -159,21 +163,39 @@ function smoothMotionValue(value) {
   if (!filteredMagnitude) {
     filteredMagnitude = value
   } else {
-    filteredMagnitude = filteredMagnitude * 0.7 + value * 0.3
+    filteredMagnitude = filteredMagnitude * 0.82 + value * 0.18
   }
   return filteredMagnitude
 }
 
 function detectStepFromMotion(value) {
   const now = Date.now()
-  const delta = Math.abs(value - lastMotionValue)
-  const minGap = now - lastStepTime > 220
 
-  if (delta > 0.95 && minGap) {
-    lastStepTime = now
-    addStep()
+  stepWindow.push(value)
+  if (stepWindow.length > 5) stepWindow.shift()
+
+  const average = stepWindow.reduce((sum, item) => sum + item, 0) / stepWindow.length
+  const delta = value - lastMagnitude
+  const minGap = now - lastStepTime > 180
+
+  if (!baselineMagnitude) {
+    baselineMagnitude = average
+  } else {
+    baselineMagnitude = baselineMagnitude * 0.9 + average * 0.1
   }
 
+  const energy = average - baselineMagnitude
+  const stepCandidate = average > 1.25 && energy > 0.45 && Math.abs(delta) > 0.18 && minGap
+
+  if (stepCandidate && peakDirection === 0) {
+    lastStepTime = now
+    peakDirection = 1
+    addStep()
+  } else if (average < 0.9) {
+    peakDirection = 0
+  }
+
+  lastMagnitude = value
   lastMotionValue = value
 }
 
@@ -181,13 +203,13 @@ function handleMotion(event) {
   const accel = event.acceleration || event.accelerationIncludingGravity
   if (!accel) return
 
-  const magnitude = Math.sqrt(
+  const rawMagnitude = Math.sqrt(
     accel.x * accel.x +
     accel.y * accel.y +
     accel.z * accel.z
   )
 
-  const smoothValue = smoothMotionValue(magnitude)
+  const smoothValue = smoothMotionValue(rawMagnitude)
   detectStepFromMotion(smoothValue)
 }
 
@@ -234,6 +256,10 @@ function startTracking() {
   lastStepTime = 0
   lastMotionValue = 0
   filteredMagnitude = 0
+  baselineMagnitude = 0
+  peakDirection = 0
+  stepWindow = []
+  lastMagnitude = 0
   updateUI()
   setupMotionTracking()
 }
@@ -265,6 +291,10 @@ function resetTracking() {
   lastStepTime = 0
   lastMotionValue = 0
   filteredMagnitude = 0
+  baselineMagnitude = 0
+  peakDirection = 0
+  stepWindow = []
+  lastMagnitude = 0
   saveData()
   updateUI()
 }
@@ -318,4 +348,3 @@ document.addEventListener('keydown', (event) => {
 window.addEventListener('beforeunload', saveData)
 
 updateUI()
-openGoalModal()
