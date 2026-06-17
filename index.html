@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Step Tracker</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="top-bar">
+        <div>
+          <p class="eyebrow">Daily progress</p>
+          <h1>Step Tracker</h1>
+        </div>
+        <button class="action-btn" id="toggleBtn">Start</button>
+      </header>
+
+      <section class="hero-panel">
+        <div class="ring-wrap">
+          <div class="progress-ring">
+            <div class="ring-inner">
+              <span id="goalPercent">0%</span>
+              <small>goal</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article>
+            <span>Steps</span>
+            <strong id="stepsCount">0</strong>
+          </article>
+          <article>
+            <span>Distance</span>
+            <strong id="distanceCount">0.00 km</strong>
+          </article>
+          <article>
+            <span>Calories</span>
+            <strong id="caloriesCount">0 kcal</strong>
+          </article>
+          <article>
+            <span>Goal</span>
+            <strong>8,000</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel-row">
+        <div class="panel-card">
+          <span class="panel-label">Live pace</span>
+          <h3 id="paceCount">0.0 km/h</h3>
+        </div>
+        <div class="panel-card">
+          <span class="panel-label">Mode</span>
+          <h3 id="modeLabel">Ready</h3>
+        </div>
+        <div class="panel-card">
+          <span class="panel-label">Status</span>
+          <h3 id="statusLabel">Waiting</h3>
+        </div>
+      </section>
+
+      <section class="controls">
+        <button class="control-btn" id="startBtn">Start tracking</button>
+        <button class="control-btn secondary" id="pauseBtn">Pause</button>
+        <button class="control-btn ghost" id="resetBtn">Reset</button>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
