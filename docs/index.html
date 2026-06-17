@@ -4,71 +4,115 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0f172a" />
-    <meta name="description" content="A simple step tracker web app for counting steps, distance, and calories." />
+    <meta name="description" content="A sporty step tracker inspired by fitness apps." />
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="style.css" />
-    <title>Step Tracker</title>
+    <title>PulseRun</title>
   </head>
   <body>
     <div class="app-shell">
       <header class="top-bar">
         <div>
-          <p class="eyebrow">Daily progress</p>
-          <h1>Step Tracker</h1>
+          <p class="eyebrow">Daily activity</p>
+          <h1>PulseRun</h1>
         </div>
-        <button class="action-btn" id="toggleBtn">Start</button>
+        <div class="top-actions">
+          <button class="icon-btn" id="goalBtn">Set goal</button>
+          <button class="action-btn" id="toggleBtn">Start</button>
+        </div>
       </header>
 
-      <section class="hero-panel">
-        <div class="ring-wrap">
-          <div class="progress-ring">
-            <div class="ring-inner">
-              <span id="goalPercent">0%</span>
-              <small>goal</small>
+      <main class="dashboard">
+        <section class="hero-card">
+          <div class="ring-panel">
+            <div class="progress-ring">
+              <div class="ring-center">
+                <span id="goalPercent">0%</span>
+                <small>goal</small>
+              </div>
             </div>
           </div>
+
+          <div class="hero-details">
+            <div class="hero-row">
+              <article class="metric-card">
+                <span>Steps</span>
+                <strong id="stepsCount">0</strong>
+              </article>
+              <article class="metric-card">
+                <span>Distance</span>
+                <strong id="distanceCount">0.00 km</strong>
+              </article>
+            </div>
+            <div class="hero-row">
+              <article class="metric-card">
+                <span>Calories</span>
+                <strong id="caloriesCount">0 kcal</strong>
+              </article>
+              <article class="metric-card accent-card">
+                <span>Daily goal</span>
+                <strong id="goalText">8,000</strong>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="info-row">
+          <div class="info-card">
+            <span>Live pace</span>
+            <h3 id="paceCount">0.0 km/h</h3>
+          </div>
+          <div class="info-card">
+            <span>Mode</span>
+            <h3 id="modeLabel">Ready</h3>
+          </div>
+          <div class="info-card">
+            <span>Status</span>
+            <h3 id="statusLabel">Waiting</h3>
+          </div>
+        </section>
+
+        <section class="controls-panel">
+          <button class="control-btn primary" id="startBtn">Start tracking</button>
+          <button class="control-btn" id="pauseBtn">Pause</button>
+          <button class="control-btn ghost" id="resetBtn">Reset</button>
+        </section>
+
+        <section class="history-panel">
+          <div class="history-header">
+            <div>
+              <p class="eyebrow small">Recent sessions</p>
+              <h2>Activity history</h2>
+            </div>
+            <span id="historySummary">0 sessions</span>
+          </div>
+          <ul id="historyList"></ul>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal" id="goalModal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow small">Setup</p>
+            <h2>Set your daily goal</h2>
+          </div>
+          <button class="modal-close" id="closeModalBtn">×</button>
         </div>
 
-        <div class="stats-grid">
-          <article>
-            <span>Steps</span>
-            <strong id="stepsCount">0</strong>
-          </article>
-          <article>
-            <span>Distance</span>
-            <strong id="distanceCount">0.00 km</strong>
-          </article>
-          <article>
-            <span>Calories</span>
-            <strong id="caloriesCount">0 kcal</strong>
-          </article>
-          <article>
-            <span>Goal</span>
-            <strong>8,000</strong>
-          </article>
-        </div>
-      </section>
+        <label for="goalInput">Target steps</label>
+        <input id="goalInput" type="number" min="1000" step="500" />
 
-      <section class="panel-row">
-        <div class="panel-card">
-          <span class="panel-label">Live pace</span>
-          <h3 id="paceCount">0.0 km/h</h3>
+        <div class="preset-row">
+          <button class="preset-btn" data-goal="5000">5K</button>
+          <button class="preset-btn" data-goal="8000">8K</button>
+          <button class="preset-btn" data-goal="10000">10K</button>
+          <button class="preset-btn" data-goal="12000">12K</button>
         </div>
-        <div class="panel-card">
-          <span class="panel-label">Mode</span>
-          <h3 id="modeLabel">Ready</h3>
-        </div>
-        <div class="panel-card">
-          <span class="panel-label">Status</span>
-          <h3 id="statusLabel">Waiting</h3>
-        </div>
-      </section>
 
-      <section class="controls">
-        <button class="control-btn" id="startBtn">Start tracking</button>
-        <button class="control-btn secondary" id="pauseBtn">Pause</button>
-        <button class="control-btn ghost" id="resetBtn">Reset</button>
-      </section>
+        <button class="control-btn primary full-width" id="saveGoalBtn">Save goal</button>
+      </div>
     </div>
 
     <script src="script.js"></script>

@@ -1,17 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #0f172a;
-  --surface: #0b1220;
-  --surface-2: #111c37;
-  --surface-3: #10213f;
+  --bg: #06111f;
+  --surface: #0d1528;
+  --surface-2: #101d37;
   --text: #eef6ff;
-  --muted: #94a3b8;
-  --accent: #22c55e;
-  --accent-2: #38bdf8;
-  --warning: #f97316;
-  --border: rgba(148, 163, 184, 0.1);
-  --shadow: 0 20px 50px rgba(15, 23, 42, 0.45);
+  --muted: #93a5c8;
+  --accent: #f97316;
+  --accent-2: #fb7185;
+  --accent-3: #38bdf8;
+  --border: rgba(148, 163, 184, 0.12);
+  --shadow: 0 30px 60px rgba(2, 8, 23, 0.55);
 }
 
 * {
@@ -23,20 +22,25 @@
 body {
   font-family: 'Inter', sans-serif;
   background:
-    radial-gradient(circle at top, rgba(34, 197, 94, 0.12), transparent 18%),
-    linear-gradient(135deg, #0f172a, #020617);
+    radial-gradient(circle at top, rgba(249, 115, 22, 0.08), transparent 18%),
+    linear-gradient(180deg, #091325, #020712);
   min-height: 100vh;
   color: var(--text);
 }
 
-button {
+button,
+input {
   font: inherit;
 }
 
+button {
+  cursor: pointer;
+}
+
 .app-shell {
-  max-width: 1100px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 48px 20px 64px;
+  padding: 40px 18px 64px;
 }
 
 .top-bar {
@@ -44,7 +48,7 @@ button {
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .top-bar h1 {
@@ -52,146 +56,218 @@ button {
   line-height: 1;
 }
 
-.top-bar .eyebrow {
-  font-size: 0.78rem;
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.26em;
   color: var(--accent);
   margin-bottom: 6px;
 }
 
-.hero-panel,
-.panel-card,
-.controls {
-  background: linear-gradient(180deg, rgba(11, 18, 32, 0.95), rgba(17, 28, 55, 0.88));
+.eyebrow.small {
+  letter-spacing: 0.22em;
+  font-size: 0.68rem;
+}
+
+.dashboard {
+  display: grid;
+  gap: 18px;
+}
+
+.hero-card,
+.info-card,
+.controls-panel,
+.history-panel,
+.modal-card {
+  background: linear-gradient(180deg, rgba(13, 21, 40, 0.98), rgba(16, 29, 55, 0.95));
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
 }
 
-.hero-panel {
+.hero-card {
   border-radius: 28px;
-  padding: 32px;
+  padding: 26px;
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 24px;
   align-items: center;
 }
 
-.ring-wrap {
+.ring-panel {
   display: flex;
   justify-content: center;
 }
 
 .progress-ring {
-  width: 220px;
-  height: 220px;
+  --progress-deg: 0deg;
+  width: 240px;
+  height: 240px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   background:
-    radial-gradient(circle at center, #0b1120 58%, transparent 59%),
-    conic-gradient(var(--accent) 0deg, var(--accent-2) 180deg, var(--warning) 360deg);
+    radial-gradient(circle at center, #0a1222 58%, transparent 59%),
+    conic-gradient(var(--accent) 0deg, var(--accent-2) var(--progress-deg), var(--accent-3) 360deg);
   position: relative;
 }
 
 .progress-ring::before {
   content: '';
   position: absolute;
-  inset: 14px;
+  inset: 16px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #0a1020, #0d1831);
+  background: linear-gradient(180deg, #0a1020, #0d1630);
 }
 
-.ring-inner {
+.ring-center {
   position: relative;
   z-index: 1;
   text-align: center;
 }
 
-.ring-inner span {
+.ring-center span {
   display: block;
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
-.ring-inner small {
+.ring-center small {
   color: var(--muted);
   text-transform: uppercase;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.22em;
 }
 
-.stats-grid {
+.hero-details {
+  display: grid;
+  gap: 14px;
+}
+
+.hero-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
-.stats-grid article {
+.metric-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.025));
   padding: 18px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
   border-radius: 18px;
 }
 
-.stats-grid span,
-.panel-label {
+.metric-card span,
+.info-card span,
+.history-header span {
   display: block;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   text-transform: uppercase;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.22em;
   margin-bottom: 8px;
 }
 
-.stats-grid strong,
-.panel-card h3 {
-  font-size: 1.7rem;
+.metric-card strong,
+.info-card h3 {
+  font-size: 1.8rem;
 }
 
-.panel-row {
-  margin-top: 18px;
+.accent-card {
+  background: linear-gradient(90deg, rgba(249, 115, 22, 0.16), rgba(56, 189, 248, 0.1));
+}
+
+.info-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.panel-card {
-  border-radius: 20px;
+.info-card {
+  border-radius: 18px;
   padding: 18px;
 }
 
-.controls {
-  margin-top: 18px;
+.controls-panel {
   border-radius: 18px;
   padding: 16px;
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
+.history-panel {
+  border-radius: 22px;
+  padding: 18px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.history-header h2 {
+  font-size: 1.3rem;
+}
+
+#historyList {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+#historyList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+#historyList li small {
+  color: var(--muted);
+}
+
 .action-btn,
-.control-btn {
+.icon-btn,
+.control-btn,
+.preset-btn,
+.modal-close {
   appearance: none;
   border: none;
-  cursor: pointer;
+}
+
+.action-btn,
+.control-btn,
+.icon-btn,
+.preset-btn {
   border-radius: 999px;
-  padding: 12px 18px;
+  padding: 12px 16px;
   font-weight: 700;
-  transition: transform 0.2s ease;
 }
 
-.action-btn {
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  color: #0f172a;
-}
-
-.control-btn {
+.action-btn,
+.control-btn.primary {
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   color: #fff;
 }
 
-.control-btn.secondary {
-  background: #1e293b;
+.icon-btn {
+  background: rgba(255, 255, 255, 0.07);
   color: var(--text);
+}
+
+.control-btn {
+  background: linear-gradient(90deg, var(--accent-3), var(--accent));
+  color: #fff;
 }
 
 .control-btn.ghost {
@@ -200,29 +276,104 @@ button {
   color: var(--text);
 }
 
-.action-btn:hover,
-.control-btn:hover {
-  transform: translateY(-1px);
+.preset-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
 }
 
-@media (max-width: 900px) {
-  .hero-panel {
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 7, 18, 0.78);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-card {
+  width: min(420px, 100%);
+  border-radius: 22px;
+  padding: 18px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.modal-card label {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.modal-card input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #0a1222;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.preset-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.modal-close {
+  background: transparent;
+  color: var(--text);
+  font-size: 1.4rem;
+}
+
+@media (max-width: 920px) {
+  .hero-card {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 640px) {
-  .stats-grid,
-  .panel-row {
+  .app-shell {
+    padding: 24px 12px 48px;
+  }
+
+  .hero-row,
+  .info-row {
     grid-template-columns: 1fr;
   }
 
-  .app-shell {
-    padding: 32px 14px 48px;
-  }
-
-  .top-bar {
+  .top-bar,
+  .history-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .top-actions {
+    width: 100%;
+  }
+
+  .top-actions button {
+    flex: 1;
+  }
+
+  .progress-ring {
+    width: 200px;
+    height: 200px;
   }
 }
